@@ -50,6 +50,11 @@ deploy:
 
 每次修改配置文件  都需要在博客所在目录下 `hexo generate` 才能保存。
 
+由于 deploy 每次都会覆盖 username.github.io 中的 CNAME
+所以需要
+`npm install hexo-generator-cname --save`
+
+README.md 由于会被编译 变成 html ，需要每次重新上传
 ## 发布文章
 
 使用
@@ -193,6 +198,9 @@ hexo generate  #保存修改，生成文件
 hexo clean #清缓存
 
 hexo deploy  #发布到远程
+
+hexo deploy --message  #发布时 添加commit信息
+
 
 ```
 
