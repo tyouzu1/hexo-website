@@ -3,6 +3,9 @@ title:
   category: Category
   tag: Tag
   schedule: Schedule
+  categories: Categories
+  tags: Tags
+  about: About
 
 menu:
   home: Home
@@ -10,6 +13,7 @@ menu:
   categories: Categories
   tags: Tags
   about: About
+  resume: Resume
   search: Search
   schedule: Schedule
   sitemap: Sitemap

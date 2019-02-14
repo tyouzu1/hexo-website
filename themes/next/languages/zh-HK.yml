@@ -1,8 +1,9 @@
 ---
 title:
   archive: 歸檔
-  category: 分類
-  tag: 標籤
+  categories: 分類
+  tags: 標籤
+  about: 關於
   schedule: 日程表
 menu:
   home: 首頁
@@ -10,6 +11,7 @@ menu:
   categories: 分類
   tags: 標籤
   about: 關於
+  resume: 簡歷
   search: 檢索
   schedule: 日程表
   sitemap: 站點地圖

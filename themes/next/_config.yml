@@ -142,8 +142,9 @@ menu:
   tags: /tags/ || tags
   categories: /categories/ || th
   about: /about/ || user
-  #schedule: /schedule/ || calendar
-  #sitemap: /sitemap.xml || sitemap
+  resume: https://tyouzu1.github.io/resume/ || vcard
+  # schedule: /schedule/ || calendar
+  # sitemap: /sitemap.xml || sitemap
   commonweal: /404.html || heartbeat
 
 # Enable/Disable menu icons / item badges.
