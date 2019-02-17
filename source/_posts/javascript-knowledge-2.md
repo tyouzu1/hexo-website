@@ -297,3 +297,25 @@ let myCopy = deepCopy(me)
 myCopy.name = '换个名字'   // 不可以，我就叫张瑞
 console.log(myCopy.name)  // 就不告诉你
 ```
+其实还搜到一个[MDN上的方法](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Example:_Copy_accessors)有点难记。
+```js
+// 下面这个函数会拷贝所有自有属性的属性描述符
+function completeAssign(target, ...sources) {
+  sources.forEach(source => {
+    let descriptors = Object.keys(source).reduce((descriptors, key) => {
+      descriptors[key] = Object.getOwnPropertyDescriptor(source, key);
+      return descriptors;
+    }, {});
+
+    // Object.assign 默认也会拷贝可枚举的Symbols
+    Object.getOwnPropertySymbols(source).forEach(sym => {
+      let descriptor = Object.getOwnPropertyDescriptor(source, sym);
+      if (descriptor.enumerable) {
+        descriptors[sym] = descriptor;
+      }
+    });
+    Object.defineProperties(target, descriptors);
+  });
+  return target;
+}
+```
