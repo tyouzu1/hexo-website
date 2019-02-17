@@ -2,6 +2,7 @@
 title: JavaScript 基础知识（1）—— 基础类型 和 引用类型
 date: 2019-02-14 18:21:30
 tags: JavaScript
+categories: JavaScript 基础知识
 ---
 说到 JavaScript 的基础知识，那肯定首当其冲的就是 基础类型 和 引用类型 了。
 <!-- more -->
@@ -16,7 +17,7 @@ JavaScript 中变量有两种不同类型的值：基本类型、引用类型。
 
 基础类型 主要有：字符串`string`、数值`number`、布尔值`boolean`、`null`、`undefined`以及ES6中的`symbol`（独一无二的值）。
 
-引用类型 主要有：对象`object`、数组`array`、正则 `regExp`、函数`function`、日期`date` 以及 特殊的基本包装类型(String、Number、Boolean)、单体内置对象（Math）等。
+引用类型 主要有：对象`object`、数组`array`、正则 `regExp`、函数`function`、日期`date` 以及 特殊的基本包装类型(`String、Number、Boolean`)、单体内置对象（`Math`）等。
 
 ```js
 // 基础类型
@@ -68,13 +69,13 @@ console.log('obj1:',obj1,',obj2:',obj2) // obj1: {name: "name"} ,obj2: {name: "n
 ```
 
 #### tip
-* new String('abc') 属于引用类型，不等于 'abc'
+* `new String('abc')` 属于引用类型，不等于 `'abc'`
 ```js
 console.log(new String('abc')=== 'abc') // false
 ```
-这是因为 String 只是一个 string 的对象封装类型，经过 new 操作符得出来的属于对象的实例。
+这是因为 `String` 只是一个 `string` 的对象封装类型，经过 `new` 操作符得出来的属于对象的实例。
 
-* 使用 const 声明的对象，可以修改其属性
+* 使用 `const` 声明的对象，可以修改其属性
 ```js
 const a = {}
 a.b = 123  // 不报错
@@ -84,7 +85,7 @@ a.b = 123  // 不报错
 ### 如何判断类型
 
 #### typeof
-typeof操作符是检测基本类型的最佳工具。
+`typeof`操作符是检测基本类型的最佳工具。
 
 ```js
 console.log('字符串:',typeof 'abc')         // 字符串: string
@@ -100,19 +101,19 @@ console.log('函数:',typeof function (){})   // 函数: function
 console.log('日期:',typeof new Date())      // 日期: object
 console.log('String封装类型:',typeof new String('string'))      // String封装类型: string
 ```
-可以发现，typeof 并不能完全区分出 null、object、array、regexp、date等，得到的值都是 object。
-在 Javascript 语言中，`typeof null === 'object'`。这样就会错误的认为 null 是一个对象。实际上这只是一个无法修复的bug。[可以看这里](http://2ality.com/2013/10/typeof-null.html)
-在《JavaScript高级程序设计中这样解释》：“因为特殊值null被认为是一个空对象的引用”。
-而经过 typeof 测试，object、array、regexp、date等 也都得出了 object，这是因为所有的引用类型，在堆中都是对象，其实都是基于Object实例进行的一种扩展。
+可以发现，`typeof` 并不能完全区分出 `null、object、array、regexp、date`等，得到的值都是 `object`。
+在 Javascript 语言中，`typeof null === 'object'`。这样就会错误的认为 `null` 是一个对象。实际上这只是一个无法修复的bug。[可以看这里](http://2ality.com/2013/10/typeof-null.html)
+在《JavaScript高级程序设计》中这样解释：“因为特殊值null被认为是一个空对象的引用”。
+而经过 `typeof` 测试，`object、array、regexp、date`等 也都得出了 `object`，这是因为所有的引用类型，在堆中都是对象，其实都是基于`Object`实例进行的一种扩展。
 
-至于 typeof function (){} 为什么是 function， 在《JavaScript权威指南》中function被看做是object基本数据类型的一种特殊对象，《JavaScript高级程序设计》也把函数视为对象，而不是一种基本数据类型。
+至于 `typeof function (){}` 为什么是 `function`， 在《JavaScript权威指南》中`function`被看做是`object`基本数据类型的一种特殊对象，《JavaScript高级程序设计》也把函数视为对象，而不是一种基本数据类型。
 ```js
 var fn = function () { };
 console.log(fn instanceof Object);  // true
 ```
 
 #### instanceof
-instanceof检测值是不是一个构造函数的实例。
+`instanceof`检测值是不是一个构造函数的实例。
 ```js
 // 常规用法
 var stringObj = new String("abc") 
@@ -132,8 +133,8 @@ console.log(foo instanceof Foo)          // true
 console.log(foo instanceof Aoo)          // true
 ...
 ```
-经过实验，也可以得出，当使用 instanceof 检测基本类型时候，只会返回false。
-但是当使用 instanceof 检测frame的数组时，会出现问题。所以 Array.isArray() 应运而生。
+经过实验，也可以得出，当使用 `instanceof` 检测基本类型时候，只会返回`false`。
+但是当使用 `instanceof` 检测frame的数组时，会出现问题。所以 `Array.isArray()` 应运而生。
 ```html
 <html>
 <head>
@@ -166,8 +167,8 @@ console.log(a.constructor == Number) //true
 （...待更新）
 
 #### toString
-其实是使用Object.prototype.toString()方法来检测数据类型。这个方法非常通用。
-
+其实是使用`Object.prototype.toString()`方法来检测数据类型。这个方法非常通用。
+当然，也可以使用`Reflect`，更加简洁。
 ```js
 console.log(Object.prototype.toString.call(new Boolean(1)))        // "[object Boolean]"
 console.log(Object.prototype.toString.call(true))                  // "[object Boolean]"
@@ -181,4 +182,6 @@ console.log(Object.prototype.toString.call([1,2,3,4,5]))           // "[object A
 console.log(Object.prototype.toString.call(new Date()))            // "[object Date]"
 console.log(Object.prototype.toString.call(new RegExp('sssssss'))) // "[object RegExp]"
 console.log(Object.prototype.toString.call(/sssssss/))             // "[object RegExp]"
+
+console.log(Reflect.toString === Object.prototype.toString)        // true
 ```
