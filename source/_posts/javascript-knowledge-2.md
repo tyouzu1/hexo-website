@@ -319,3 +319,5 @@ function completeAssign(target, ...sources) {
   return target;
 }
 ```
+
+github上的一个方法[https://github.com/Tommy-White/deeplyAssign/blob/master/src/index.ts](https://github.com/Tommy-White/deeplyAssign/blob/master/src/index.ts)
