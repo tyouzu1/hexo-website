@@ -14,7 +14,7 @@ debounce: 去抖动,防止误动作,防抖动。
 ## 第一种 n秒后执行
 每触发一次事件，生成一个定时器，清空之前的定时器，定时器到达时间才会执行函数。
 ```js
-function debounce(fn, time) {
+function debounce(fn, delay) {
   let timer; // 通过闭包保存定时器变量
   return function () {
     let that = this;
@@ -22,7 +22,7 @@ function debounce(fn, time) {
     if (timer) clearTimeout(timer);
     timer = setTimeout(() => {
       fn.apply(that, args)
-    }, time);
+    }, delay);
   }
 }
 
@@ -31,7 +31,7 @@ function debounce(fn, time) {
 ## 第二种 立即执行
 触发事件后函数立即执行并禁用函数不允许再次调用，在周期结束后解除禁用允许下一次调用函数。
 ```js
-function debounce(fn,time) {
+function debounce(fn,delay) {
   let timer;
   return function () {
     let that = this;
@@ -40,7 +40,7 @@ function debounce(fn,time) {
     let allow = !timer;  // 这里做一个限制
     timer = setTimeout(() => {
       timer = null;
-    }, time)
+    }, delay)
     if (allow) fn.apply(that, args) // 这里做一个限制
   }
 }
@@ -49,7 +49,7 @@ function debounce(fn,time) {
 ## 第三种 合体版
 以上方法也可以加入一个参数，用于控制是否立即执行
 ```js
-function debounce(fn,time,immediate) {
+function debounce(fn,delay,immediate) {
   let timer;
   return function () {
     let that = this;
@@ -59,12 +59,12 @@ function debounce(fn,time,immediate) {
       let able = !timer;
       timer = setTimeout(() => {
         timer = null;
-      }, time)
+      }, delay)
       if (able) fn.apply(that, args)
     } else {
       timer = setTimeout(()=>{
         fn.apply(that, args)
-      }, time);
+      }, delay);
     }
   }
 }
@@ -77,7 +77,7 @@ throttle: 节流阀,节流阀,节流。
 ## 第一种 使用定时器
 与debounce第一种的区别是，debounce需要清空并重新生成定时器。throttle是等待定时器执行完，然后在生成定时器。
 ```js
-function throttle(fn, time) {
+function throttle(fn, delay) {
   let timer;
   return function() {
     let that = this;
@@ -86,7 +86,7 @@ function throttle(fn, time) {
       timer = setTimeout(() => {
         timer = null;
         fn.apply(that, args)
-      }, time)
+      }, delay)
     }
   }
 }
@@ -95,7 +95,7 @@ function throttle(fn, time) {
 ## 第二种 立即执行 + 开关
 与debounce第一种的区别是，debounce需要清空并重新生成定时器。throttle是等待定时器执行完，然后在生成定时器。
 ```js
-function throttle(fn, time, immediate) {
+function throttle(fn, delay, immediate) {
   let timer;
   return function() {
     let that = this;
@@ -105,12 +105,12 @@ function throttle(fn, time, immediate) {
         fn.apply(that, args)
         timer = setTimeout(() => {
           timer = null;
-        }, time)
+        }, delay)
       }else {
         timer = setTimeout(() => {
           timer = null;
           fn.apply(that, args)
-        }, time)
+        }, delay)
       }
     }
   }
@@ -120,13 +120,13 @@ function throttle(fn, time, immediate) {
 ## 第三种 使用时间戳
 使用时间戳可以避免生成定时器，利用时间来判定事件是否可以执行。
 ```js
-function throttle(fn, time) {
+function throttle(fn, delay) {
     let prev = 0;
     return function() {
         let now = Date.now();
         let that = this;
         let args = arguments;
-        if (now - prev > time) { // 对比时间差
+        if (now - prev > delay) { // 对比时间差
             fn.apply(that, args);
             prev = now;
         }
