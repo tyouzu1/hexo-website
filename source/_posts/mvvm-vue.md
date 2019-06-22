@@ -2,6 +2,7 @@
 title: 简易实现一个 Vue（1）【原理解析】
 date: 2019-02-28 17:32:10
 tags: Vue
+categories: 简易实现一个 Vue
 ---
 简单实现一个Vue，还原一些基本功能。当然，实现之前需要先了解它的实现原理。
 其实 Vue 的源码确实很清楚了，这里可能讲的也就一知半解，也就是个大概思路。
@@ -209,6 +210,7 @@ export function defineReactive (
     enumerable: true,
     configurable: true,
     get: function reactiveGetter () {
+      // 只有第一次会触发绑定依赖，之后就忽略了
       const value = getter ? getter.call(obj) : val
       if (Dep.target) {
         dep.depend()
@@ -314,7 +316,7 @@ export default class Watcher {
    * Evaluate the getter, and re-collect dependencies.
    */
   get () {
-    pushTarget(this)  // 这里的骚操作 联系到了 Dep 中的 Dep.target，传递this， 
+    pushTarget(this)  // 这里的骚操作 联系到了 Dep 中的 Dep.target，传递this， 便可以把当前编译时get的数据添加一个wather
     let value
     const vm = this.vm
     value = this.getter.call(vm, vm) //执行了 传入的expOrFn 即 updateComponent
@@ -378,6 +380,10 @@ export default class Dep {
   }
 }
 ```
+总结一下，基本上流程就是：
+1. 组件挂载时，会触发`new Wathcer`,从而触发`Wathcer`中的`this.get()`,使`Dep.target`获得`Watcher`的实例
+2. 编译虚拟DOM时，遇到需要展示`this.data`上的数据时（`_s(person.name)`）,就会获取`this.data`上的数据从而触发`get`方法，从而触发`dep.depend()`，推入`Wathcer`
+3. 更新时，触发`dep.notify()`,触发`Wathcer`,再触发新一次的计算、渲染
 
 # 模板引擎
 虽然说数据现在已经能够进行响应式了，数据响应式之后视图 View 又是如何更新呢？
@@ -433,7 +439,7 @@ export const createCompiler = createCompilerCreator(function baseCompile (
         {
           type: 2,  // parse 中会标记节点类型
           text: 'person的名字{{person.name}}', // 节点文本
-          expression: '"person的名字" + _s(person.name)' // 节点的js
+          expression: '"person的名字" + _s(person.name)' // 节点的js，调用_s(person.name)后会触发 get
         }
       ]
     }
@@ -575,4 +581,4 @@ Vue 通过解析模版生成了 `render` 函数，调用 `render` 函数其实�
 在上文 [**Watcher**](#Watcher) 中介绍的 Watcher 时的 [lifecycle.js](https://github.com/vuejs/vue/blob/2.6/src/core/instance/lifecycle.js#L169) 中，也可以发现`vm._render() vm._update()`的影子，其实 Vue 就是在这里绑定的监听，用于调用 render 函数进行更新视图。
 在想一下之前的 **Watcher** 与 **Dep** ，结合来看，也就大概了解Vue的运行顺序及其原理了，点到为止。
 
-正式造 Vue 可见下篇 [简易实现一个 Vue（2）【开始造轮子】](/blog/2019/06/08/mvvm-vue-2/)
+正式造 Vue 可见下篇 [简易实现一个 Vue（2）](/blog/2019/06/08/mvvm-vue-2/)
