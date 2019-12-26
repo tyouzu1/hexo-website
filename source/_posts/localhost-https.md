@@ -22,8 +22,10 @@ tags:
 ## PWA 表现形式
 可以访问下 [微博](http://m.weibo.cn/) 的 m 站，现在已经支持了 **PWA**。可以添加到桌面。
 
-如果不能添加，可能是浏览器没有启用相应功能。
-可以打开 Chrome浏览器的 `chrome://flags/` 页面。搜索 `progressive` 打开 `Desktop PWAs` 功能
+~~如果不能添加，可能是浏览器没有启用相应功能。
+可以打开 Chrome浏览器的 `chrome://flags/` 页面。搜索 `progressive` 打开 `Desktop PWAs` 功能~~
+
+搜不到的话，那应该就肯定能用。现在 Chrome 基本上都是默认支持了。
 
 由于我打开后搜索不到了，就不截图了。
 

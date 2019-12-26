@@ -15,7 +15,7 @@ JavaScript 中变量有两种不同类型的值：基本类型、引用类型。
 
 {% asset_img jk1.png 栈内存与堆内存 %}
 
-基础类型 主要有：字符串`string`、数值`number`、布尔值`boolean`、`null`、`undefined`以及ES6中的`symbol`（独一无二的值）。
+基础类型 主要有：字符串`string`、数值`number`、布尔值`boolean`、`null`、`undefined`以及ES6中的`symbol`（独一无二的值），加上现在最新的 [`BigInt`](https://tc39.es/ecma262/)
 
 引用类型 主要有：对象`object`、数组`array`、正则 `regExp`、函数`function`、日期`date` 以及 特殊的基本包装类型(`String、Number、Boolean`)、单体内置对象（`Math`）等。
 
@@ -27,7 +27,8 @@ var bool = false
 var Null = null
 var Undefined = undefined
 var symbol = Symbol()
-var string = new String('string')
+// 时过境迁，bigint也成为了基础类型的一份子
+var bigint = 11n
 
 //引用类型
 var obj = {}
@@ -35,6 +36,7 @@ var arr = []
 var reg = new RegExp()
 var fn = function (){}
 var date = new Date()
+var string = new String('string')
 ```
 
 ### 两种类型的复制
@@ -90,6 +92,7 @@ a.b = 123  // 不报错
 ```js
 console.log('字符串:',typeof 'abc')         // 字符串: string
 console.log('数值:',typeof 123)             // 数值: number
+console.log('BigInt:',typeof 123n)         // BigInt: bigint
 console.log('布尔值:',typeof false)         // 布尔值: boolean
 console.log('null:',typeof null)           // null: object
 console.log('undefined:',typeof undefined) // undefined: undefined
@@ -174,6 +177,8 @@ console.log(Object.prototype.toString.call(new Boolean(1)))        // "[object B
 console.log(Object.prototype.toString.call(true))                  // "[object Boolean]"
 console.log(Object.prototype.toString.call(new Number(1)))         // "[object Number]"
 console.log(Object.prototype.toString.call(100))                   // "[object Number]"
+console.log(Object.prototype.toString.call(BigInt(11)))            // "[object BigInt]"
+console.log(Object.prototype.toString.call(11n))                   // "[object BigInt]"
 console.log(Object.prototype.toString.call(new String("sssssss"))) // "[object String]"
 console.log(Object.prototype.toString.call("sssssss"))             // "[object String]"
 console.log(Object.prototype.toString.call(function(){return 1}))  // "[object Function]"
