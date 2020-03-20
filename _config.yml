@@ -79,8 +79,8 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  # repository: git@github.com:tyouzu1/blog.git
-  repository: https://github.com/tyouzu1/hexo-website.git
+  repository: git@github.com:tyouzu1/blog.git
+  # repository: https://github.com/tyouzu1/hexo-website.git
   branch: master
 
 # Live2D
