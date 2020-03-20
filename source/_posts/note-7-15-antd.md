@@ -1,7 +1,8 @@
 ---
 title: 日常笔记/19-7-15/antd使用问题/关闭浮层/dispatchEvent
 date: 2019-07-15 18:29:20
-tags:
+tags: antd
+categories: 日常笔记
 ---
 碰见一个问题（后期有空补图）
 使用 antd `Select、DatePiker` 等会弹出浮层的组件时，浮层会一直存在，在滚动屏幕时，不会自动关闭浮层。
