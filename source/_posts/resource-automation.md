@@ -7,12 +7,27 @@ tags:
   - redux
 categories: 日常笔记
 ---
-在开发中遇到了这样的问题：（使用 redux 和 saga）
+在开发中经常会遇到这样的问题：每次在当前目录下增加一个新的文件，需要在入口文件 index.js 中引入
+比如这样：
+```js
+import A from './A';
+import B from './B';
+import C from './C';
+export default {
+  A,
+  B,
+  C,
+}
+```
+每次加一个文件，都需要在入口文件中引用，如果忘记了，肯定会出现问题，那么该如何在项目中，自动的引入这些琐碎的文件呢？
+<!-- more -->
+## 我的问题
+
+我在开发中遇到了这样的问题：（使用 redux 和 saga）
 
 * 每建一个新的页面，需要增加一个 reducer 和 saga 文件。
 * 每个 reducer 中需要定义一个独立的 namespace 。
 * 每个 reducer 和 saga 文件都需要在入口文件中引入，不然等于无效。
-<!-- more -->
 
 ## reducer 入口文件
 
