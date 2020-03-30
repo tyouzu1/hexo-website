@@ -8,15 +8,24 @@
 @import "menu";
 @import "github-banner" if hexo-config('github_banner');
 
-:root { 
+:root {
   --dark: #dcdcdc;
   --light: transparent;
-  --bg: var(--light);
   color-scheme: light dark;
+}
+:root body:not(.dark){ 
+  --bg: var(--light);
+  --linkHover: #222;
+ --light: transparent;
+}
+:root body.dark{
+  --bg: var(--dark);
+  --linkHover: #fff;
 }
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: var(--dark);
+    --linkHover: #fff;
   }
 }
 dark-mode, dark-bg {

@@ -5,10 +5,10 @@
   <script>
   (function(){
     var dark = document.getElementById('checked_1')
+    var body = document.body
     var theme = window.localStorage.getItem('theme')
     var darkMedia = window.matchMedia('(prefers-color-scheme: dark)')
     function darkModeListener() {
-      console.log(darkMedia.matches)
       dark.checked = !!darkMedia.matches
     }
     darkMedia.addListener(darkModeListener)
@@ -19,7 +19,18 @@
     }else {
       darkModeListener()
     }
-    dark.onclick = (e)=>{window.localStorage.setItem('theme',e.target.checked ? 'dark' : 'light')}
+    bodyDarkToggle(dark.checked)
+    dark.onclick = (e)=>{
+      window.localStorage.setItem('theme',e.target.checked ? 'dark' : 'light')
+      bodyDarkToggle(e.target.checked)
+    }
+    function bodyDarkToggle(checked){
+      if(checked){
+        body.classList.add('dark') 
+      }else {
+       body.classList.remove('dark')
+      }
+    }
   })()
   </script>
     <dark-bg></dark-bg>

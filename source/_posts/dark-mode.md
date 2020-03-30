@@ -67,36 +67,48 @@ darkMedia.addListener(darkModeListener)
 
 回到主题，在知道如何判定dark模式之后，只需要根据不通模式，区分一下样式即可。
 
-比如可以利用 `@media (prefers-color-scheme: dark)`来区分dark模式，修改需要改动的样式或者 css 变量。使用 matchMedia API 等来动态改动 body 的 class，或者改变 css 变量，增加你独特的样式。
+比如可以利用 `@media (prefers-color-scheme: dark)`来区分dark模式，修改需要改动的样式或者 css 变量。
+
+但是由于是使用 media 来自动切换，如果需要支持手动修改主题，也就变得更麻烦。所以如果要支持手动切换主题的话，更适合使用动态修改标签类名等功能（如 body、body.dark等 ）来进行切换。
 
 我在博客中使用了 media 来区分 dark 模式下的变量，使用 matchMedia 监听系统本身的主题，使用 localStorage 来存储用户已经选择的主题。
 
 ```html
+<!-- 有点无聊，用 checkbox 和 css变量 组合了一下 ，写了个 switch 来切换主题。 -->
 <div class="switch-box">
   <input id="checked_1" type="checkbox" class="switch"  value="0"0 />
   <label for="checked_1">
   <script>
   (function(){
     var dark = document.getElementById('checked_1')
-    // 获取 dark 的 media
+    var body = document.body
+    var theme = window.localStorage.getItem('theme')
     var darkMedia = window.matchMedia('(prefers-color-scheme: dark)')
     function darkModeListener() {
-      dark.checked = darkMedia.matches // darkMedia.matches true 表示为 dark 模式
+      console.log(darkMedia.matches)
+      dark.checked = !!darkMedia.matches
     }
-    // 监听系统的 dark 模式切换，自动改变主题
     darkMedia.addListener(darkModeListener)
-
-     // 获取缓存的主题，如果有主题，就切换，没缓存就使用 matchMedia 获取的值
-    var theme = window.localStorage.getItem('theme')
-     if(theme==='dark'){
+    if(theme==='dark'){
       dark.checked = true
     }else if(theme==='light'){
       dark.checked = false
     }else {
       darkModeListener()
     }
-    // 用于缓存
-    dark.onclick = (e)=>{window.localStorage.setItem('theme',e.target.checked ? 'dark' : 'light')}
+    bodyDarkToggle(dark.checked)
+    dark.onclick = (e)=>{
+      window.localStorage.setItem('theme',e.target.checked ? 'dark' : 'light')
+      bodyDarkToggle(e.target.checked)
+    }
+    function bodyDarkToggle(checked){
+      // 切换body伤的dark样式
+      if(checked){
+        body.classList.add('dark') 
+      }else {
+       body.classList.remove('dark')
+      }
+    }
   })()
   </script>
     <dark-bg></dark-bg>
@@ -104,18 +116,35 @@ darkMedia.addListener(darkModeListener)
   </label>
 </div>
 ```
-有点无聊，用 checkbox 和 css变量 组合了一下 ，写了个 switch，不用再写 js 啦～
+我使用`@media (prefers-color-scheme: dark)`来确定无缓存的默认情况下是否启用 dark 模式的样式，使用了动态的`body:not(.dark)`和`body.dark`来增加缓存下来的样式的优先级，防止被 media 中的样式覆盖。
+
+
 ```css
-:root { 
+:root {
   --dark: #dcdcdc;
   --light: transparent;
-  --bg: var(--light);
   color-scheme: light dark;
+}
+:root body:not(.dark){ 
+  --bg: var(--light);
+  --linkHover: #222;
+ --light: transparent;
+}
+:root body.dark{
+  --bg: var(--dark);
+  --linkHover: #fff;
 }
 @media (prefers-color-scheme: dark) {
   :root {
+    /* 变量修改变量，集中颜色到一个地方处理 */
     --bg: var(--dark);
+    /* 直接修改变量，分开处理颜色 */
+    --linkHover: #fff;
   }
+}
+a:hover {
+  /* dark */
+  color: var(--linkHover);
 }
 dark-mode, dark-bg {
   position: fixed;
