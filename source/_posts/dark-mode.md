@@ -63,7 +63,9 @@ darkMedia.addListener(darkModeListener)
 # 实际应用
 我在[博客](https://tyouzu1.github.io/blog)中加了个 switch 按钮，用来切换 `dark mode`。
 
-写的时候突然脑洞大开，利用`mix-blend-mode`，做了一个反色的背景版。如果整体配色合适的话，用`mix-blend-mode`也许能够刚刚好配合出一个新的主题呢。当然，也一定要小心谨慎，因为`mix-blend-mode`会覆盖当前层级的所有展示，也许会影响你文中的图片展示。
+写的时候突然脑洞大开，利用`mix-blend-mode`，做了一个反色的背景版。如果整体配色合适的话，用`mix-blend-mode`也许能够刚刚好配合出一个新的主题呢。甚至可以利用`mix-blend-mode`来做一些特效，比如 可以写个动画，由小圆扩散为全屏幕、由左扩散到右的反色滤镜，很多网站都有这样的设计。
+
+当然，也一定要小心谨慎，因为`mix-blend-mode`会覆盖当前层级的所有展示，也许会影响你文中的图片展示。
 
 回到主题，在知道如何判定dark模式之后，只需要根据不通模式，区分一下样式即可。
 

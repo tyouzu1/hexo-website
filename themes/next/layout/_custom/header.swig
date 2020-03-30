@@ -1,6 +1,6 @@
 
 <div class="switch-box">
-  <input id="checked_1" type="checkbox" class="switch"  value="0"0 />
+  <input id="checked_1" type="checkbox" class="switch"  value="0" />
   <label for="checked_1">
   <script>
   (function(){
