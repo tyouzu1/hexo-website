@@ -511,7 +511,7 @@ pangu: false
 #swiftype_key:
 
 # Baidu Analytics ID
-#baidu_analytics:
+baidu_analytics: e098059d49e88d4847eee5cfb83d9ddc
 
 # Growingio Analytics ID
 # Copyright 2015-2018 GrowingIO, Inc. More info available at https://www.growingio.com
@@ -634,7 +634,7 @@ needmoreshare2:
 # See: https://ziyuan.baidu.com/site
 baidu_site_verification: OE2Os7luGe
 
-baidu_tongji: 164fe33111c70f8f03e2b53db49ebd49
+# baidu_tongji: 164fe33111c70f8f03e2b53db49ebd49
 # CNZZ count
 #cnzz_siteid:
 

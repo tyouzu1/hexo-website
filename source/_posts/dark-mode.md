@@ -62,6 +62,15 @@ darkMedia.addListener(darkModeListener)
 
 # 实际应用
 我在[博客](https://tyouzu1.github.io/blog)中加了个 switch 按钮，用来切换 `dark mode`。
+
+写的时候突然脑洞大开，利用`mix-blend-mode`，做了一个反色的背景版。如果整体配色合适的话，用`mix-blend-mode`也许能够刚刚好配合出一个新的主题呢。当然，也一定要小心谨慎，因为`mix-blend-mode`会覆盖当前层级的所有展示，也许会影响你文中的图片展示。
+
+回到主题，在知道如何判定dark模式之后，只需要根据不通模式，区分一下样式即可。
+
+比如可以利用 `@media (prefers-color-scheme: dark)`来区分dark模式，修改需要改动的样式或者 css 变量。使用 matchMedia API 等来动态改动 body 的 class，或者改变 css 变量，增加你独特的样式。
+
+我在博客中使用了 media 来区分 dark 模式下的变量，使用 matchMedia 监听系统本身的主题，使用 localStorage 来存储用户已经选择的主题。
+
 ```html
 <div class="switch-box">
   <input id="checked_1" type="checkbox" class="switch"  value="0"0 />
@@ -95,7 +104,7 @@ darkMedia.addListener(darkModeListener)
   </label>
 </div>
 ```
-有点无聊，用 checkbox 和 css变量 组合了一下，不用再写 js 啦～
+有点无聊，用 checkbox 和 css变量 组合了一下 ，写了个 switch，不用再写 js 啦～
 ```css
 :root { 
   --dark: #dcdcdc;
@@ -116,10 +125,8 @@ dark-mode, dark-bg {
   left: 0;
   pointer-events: none;
 }
-/* 划重点 start */
 dark-mode {
   background: var(--bg);
-  /* 重中之最简单之 mix-blend-mode */
   mix-blend-mode: difference;
   /* 有zindex层级才会有效，没有 index 和谁去 mix 呢 */
   transition: all 0.5s ease;
@@ -129,7 +136,6 @@ dark-bg {
   background: #fff;
   z-index: -11;
 }
-/* 划重点 end */
 .switch-box .switch~label {
   /* 正常的 --bg */
   --bg: var(--light);
